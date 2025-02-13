@@ -15,8 +15,16 @@ public class MainServer {
      */
     public static void main(String[] args) {
         Server s = new Server(1906);
-        s.attendi();
-        s.chiudi();
+        int count = 0;
+        while(count < 5){
+            System.out.println("Client n. " + (count+1));
+            s.attendi();
+            count ++;
+            s.leggi();
+            s.scrivi();
+            s.chiudi();
+        }
+        s.termina();
     }
     
 }
