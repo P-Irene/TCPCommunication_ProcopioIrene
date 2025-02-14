@@ -23,7 +23,6 @@ public class Server {
     Socket clientSocket;  //data socket
     int porta;
     String ROSSO = "\u001B[31m";
-    public static final String BLU = "\u001B[34m";
     InputStream is;
     OutputStream os;
     Scanner streamIn = null;
@@ -34,7 +33,7 @@ public class Server {
         this.porta = porta;
         try {         
             serverSocket = new ServerSocket(porta);
-            System.out.println(ROSSO + "1)Server in ascolto\n");
+            System.out.println(ROSSO + "1)Server in ascolto\n" + MainClient.RESET);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Errore del server nella fase di binding");
@@ -44,7 +43,7 @@ public class Server {
     public Socket attendi(){
         try {
             clientSocket = serverSocket.accept();
-            System.out.println(BLU + "2)Connessione avvenuta e data socket creata.");
+            System.out.println(MainClient.BLU + "2)Connessione avvenuta e data socket creata." + MainClient.RESET);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Errori di connessione con il client");
@@ -58,7 +57,7 @@ public class Server {
                 is = clientSocket.getInputStream();
                 streamIn = new Scanner(is);
 
-                messaggioIn = streamIn.next();
+                messaggioIn = streamIn.nextLine();
                 System.out.println("3)Messaggio del client: " + messaggioIn);
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,8 +70,12 @@ public class Server {
             try {
                 os = clientSocket.getOutputStream();
                 streamOut = new PrintWriter(os);
+                streamOut.flush();
+                
+                Scanner wr = new Scanner (System.in);
+                System.out.print("Scrivi un messaggio: ");
 
-                messaggioOut = "Ciao client! Ti aspettavo!";
+                messaggioOut = wr.nextLine();
                 streamOut.println(messaggioOut);
                 streamOut.flush();
             } catch (IOException ex) {
@@ -85,11 +88,11 @@ public class Server {
         if(clientSocket != null)
             try {
                 clientSocket.close();
-                System.out.println(BLU + "5)Chiusura connessione con il client");
+                System.out.println(MainClient.BLU + "5)Chiusura connessione con il client" + MainClient.RESET);
                 System.out.println("---------------------------------------");
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(BLU + "Errore di chiusura connession e con il client");
+                System.err.println("Errore di chiusura connession e con il client");
             }
     }
     
@@ -97,7 +100,7 @@ public class Server {
         if(serverSocket != null)
             try {
                 serverSocket.close();
-                System.out.println(ROSSO + "6)Chiusura della connessione del server");
+                System.out.println(ROSSO + "6)Chiusura della connessione del server" + MainClient.RESET);
             } catch (IOException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                 System.err.println("Errore nella chiusura della connessione");
