@@ -42,7 +42,7 @@ public class Client {
     public void connetti(String nomeServer, int portaServer){
         try {
             socket = new Socket(nomeServer, portaServer);
-            System.out.println(colore + "2)Connessione avvenuta con il server");
+            System.out.println(MainClient.BLU + "2)Connessione avvenuta con il server" + MainClient.RESET);
         } catch (ConnectException ex){
             System.err.println("Errore server non in ascolto");
         } catch (UnknownHostException ex){
@@ -56,11 +56,15 @@ public class Client {
     public void scrivi(){
         if(socket != null)
             try {
+                System.out.println("Scrittura messaggio Client");
                 os = socket.getOutputStream();
                 streamOut = new PrintWriter(os);
                 streamOut.flush();
-
-                messaggioOut = "Eccomi!";
+                
+                Scanner wr = new Scanner (System.in);
+                System.out.print("Scrivi un messaggio: ");
+                
+                messaggioOut = wr.nextLine();
                 streamOut.println(messaggioOut);
                 streamOut.flush();
             } catch (IOException ex) {
@@ -86,10 +90,10 @@ public class Client {
         if(socket != null)  //NullPointerException (NON CONTROLLATA)
             try {
                 socket.close();
-                System.out.println(Server.BLU + "5)Chiusura della connessione con il server");
+                System.out.println(MainClient.BLU + "5)Chiusura della connessione con il server" + MainClient.RESET);
             } catch (IOException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 System.err.println("Errore di chiusura della connessione con il server");
             }
-    }
+    } 
 }
