@@ -53,7 +53,7 @@ public class Client {
         }
     }
     
-    public void scrivi(){
+    public String scrivi(){
         if(socket != null)
             try {
                 System.out.println("Scrittura messaggio Client");
@@ -71,6 +71,7 @@ public class Client {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 System.err.println("Errore di I/O!");
             }
+        return messaggioOut;
     }
     
     public void leggi(){

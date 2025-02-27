@@ -4,6 +4,7 @@
  */
 package tcpcommunication;
 
+import java.util.Scanner;
 /**
  *
  * @author Irene
@@ -22,8 +23,10 @@ public class MainClient {
     public static void main(String[] args) {
         Client c1 = new Client("irene", GIALLO_CHIARO);
         c1.connetti("localhost", 1906);
-        c1.scrivi();
-        c1.leggi();
+        while(!(c1.scrivi().equals("termina"))){
+            c1.scrivi();
+            c1.leggi();
+        }
         c1.chiudi();
     }
     

@@ -16,15 +16,16 @@ public class MainServer {
     public static void main(String[] args) {
         Server s = new Server(1906);
         int count = 0;
-        while(count < 5){
-            System.out.println("Client n. " + (count+1));
-            s.attendi();
-            count ++;
-            s.leggi();
-            s.scrivi();
-            s.chiudi();
+        try {
+            while (true) {
+                ClientHandler clientHandler = new ClientHandler(s.attendi());
+                new Thread(clientHandler).start();
+                System.out.println("Client n. " + (count + 1));
+                count++;
+            }
+        }finally {
+            s.termina();
         }
-        s.termina();
     }
     
 }
