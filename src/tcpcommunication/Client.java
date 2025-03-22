@@ -75,15 +75,17 @@ public class Client {
     }
     
     public void leggi(){
-        try {
-            is = socket.getInputStream();
-            streamIn = new Scanner(is);
-            
-            messaggioIn = streamIn.nextLine();
-            System.out.println("4)Messaggio del server: " + messaggioIn);
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println("Errore di I/O!");
+        if(socket != null) {
+            try {
+                is = socket.getInputStream();
+                streamIn = new Scanner(is);
+
+                messaggioIn = streamIn.nextLine();
+                System.out.println("4)Messaggio del server: " + messaggioIn);
+            } catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println("Errore di I/O!");
+            }
         }
     }
     
